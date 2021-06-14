@@ -12,7 +12,8 @@ public class Notepad
     {
         noteDates = new LinkedList<>();
         noteDates.add(new NoteDates());
-        noteDates.get(curNumberNote).setName("Empty");
+        noteDates.get(curNumberNote).setName("Создать запись");
+        noteDates.getFirst().setIsEmptyNote(true);
     }
 
     public int getNumberNotes()
@@ -20,9 +21,14 @@ public class Notepad
         return noteDates.size();
     }
 
-    public void addNewNote() {
-        noteDates.add(new NoteDates());
-        noteDates.getLast().setName("Empty");
+    public void addNewNote(String name) {
+        noteDates.getFirst().setName(name + " (" + noteDates.getFirst().getDate() + ")");
+        noteDates.getFirst().setIsEmptyNote(false);
+
+        // Создание нового пустого элемента
+        noteDates.add(0, new NoteDates());
+        noteDates.get(curNumberNote).setName("Создать запись");
+        noteDates.getFirst().setIsEmptyNote(true);
     }
 
     public NoteDates getNext()
@@ -37,5 +43,4 @@ public class Notepad
             return null;
         }
     }
-
 }

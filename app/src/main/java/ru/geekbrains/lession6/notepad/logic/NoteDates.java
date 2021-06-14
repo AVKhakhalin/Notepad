@@ -10,6 +10,7 @@ public class NoteDates
     private int dateMonth;
     private int dateDay;
     private String text;
+    private boolean isEmptyNote;
 
     NoteDates()
     {
@@ -20,6 +21,7 @@ public class NoteDates
         dateMonth = cal.get(Calendar.MONTH) + 1;
         dateDay = cal.get(Calendar.DAY_OF_MONTH);
         text = "";
+        isEmptyNote = true;
     }
 
     public String getName() {
@@ -60,8 +62,16 @@ public class NoteDates
 
     public String getDate() {
         String date = (dateDay < 10 ? ("0" + String.valueOf(dateDay)) : String.valueOf(dateDay));
-        String month = (dateDay < 10 ? ("0" + String.valueOf(dateMonth)) : String.valueOf(dateMonth));
+        String month = (dateMonth < 10 ? ("0" + String.valueOf(dateMonth)) : String.valueOf(dateMonth));
         return String.format("%s.%s.%d", date, month, dateYear);
     }
 
+    public void setIsEmptyNote(boolean emptyNote) {
+        isEmptyNote = emptyNote;
+    }
+
+    public boolean getIsEmptyNote()
+    {
+        return isEmptyNote;
+    }
 }

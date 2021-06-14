@@ -68,11 +68,6 @@ public class NoteDatesListFragment extends Fragment {
     {
         LinearLayout layoutView = (LinearLayout) view;
         Context context = getContext();
-        notepad.addNewNote();
-        notepad.addNewNote();
-        notepad.addNewNote();
-        notepad.addNewNote();
-        notepad.addNewNote();
         NoteDates curDates = notepad.getNext();
         Toast.makeText(context, String.format("%d", notepad.getNumberNotes()), Toast.LENGTH_SHORT).show();
         while (curDates != null)
@@ -80,8 +75,8 @@ public class NoteDatesListFragment extends Fragment {
             if (context != null)
             {
                 TextView textView = new TextView(context);
-                textView.setText(curDates.getName() + ", " + curDates.getDate());
-                textView.setTextSize(25);
+                textView.setText(curDates.getName());
+                textView.setTextSize(30);
                 layoutView.addView(textView);
             }
             curDates = notepad.getNext();
