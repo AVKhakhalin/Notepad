@@ -2,7 +2,7 @@ package ru.geekbrains.lession6.notepad.logic;
 
 import java.util.Calendar;
 
-class NoteDates
+public class NoteDates
 {
     private String name;
     private String description;

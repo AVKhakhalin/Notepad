@@ -10,8 +10,6 @@ import ru.geekbrains.lession6.notepad.logic.Notepad;
 
 public class MainActivity extends AppCompatActivity {
 
-    Notepad notepad = new Notepad();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
