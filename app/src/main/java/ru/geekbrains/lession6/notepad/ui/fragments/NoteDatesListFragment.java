@@ -68,18 +68,23 @@ public class NoteDatesListFragment extends Fragment {
     {
         LinearLayout layoutView = (LinearLayout) view;
         Context context = getContext();
-        NoteDates curDates = notepad.getNext();
-        Toast.makeText(context, String.format("%d", notepad.getNumberNotes()), Toast.LENGTH_SHORT).show();
-        while (curDates != null)
+        if (context != null)
         {
-            if (context != null)
+            NoteDates curDates = notepad.getNext();
+            Toast.makeText(context, String.format("%d", notepad.getNumberNotes()), Toast.LENGTH_SHORT).show();
+            int counter = -1;
+            while (curDates != null)
             {
+                counter++;
                 TextView textView = new TextView(context);
                 textView.setText(curDates.getName());
                 textView.setTextSize(30);
                 layoutView.addView(textView);
+                curDates = notepad.getNext();
+
+                // Вешаем слушатель на элементы списка
+//                textView.setOnClickListener(v -> ФУНКЦИЯ ВЫЗОВА НОВОЙ АКТИВИТИ С СОДЕРЖАНИЕМ ЭЛЕМЕНТА);
             }
-            curDates = notepad.getNext();
         }
     }
 }
