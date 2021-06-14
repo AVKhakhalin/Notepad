@@ -1,8 +1,11 @@
 package ru.geekbrains.lession6.notepad.logic;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 
-public class NoteDates
+public class NoteDates implements Parcelable
 {
     private String name;
     private String description;
@@ -24,7 +27,7 @@ public class NoteDates
         isEmptyNote = true;
     }
 
-    public String getName() {
+     public String getName() {
         return name;
     }
 
@@ -74,4 +77,43 @@ public class NoteDates
     {
         return isEmptyNote;
     }
+
+    // Методы для передачи класса
+    protected NoteDates(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        dateYear = in.readInt();
+        dateMonth = in.readInt();
+        dateDay = in.readInt();
+        text = in.readString();
+        isEmptyNote = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeInt(dateYear);
+        dest.writeInt(dateMonth);
+        dest.writeInt(dateDay);
+        dest.writeString(text);
+        dest.writeByte((byte) (isEmptyNote ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<NoteDates> CREATOR = new Creator<NoteDates>() {
+        @Override
+        public NoteDates createFromParcel(Parcel in) {
+            return new NoteDates(in);
+        }
+
+        @Override
+        public NoteDates[] newArray(int size) {
+            return new NoteDates[size];
+        }
+    };
 }

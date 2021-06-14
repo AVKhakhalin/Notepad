@@ -7,7 +7,7 @@
     tools:context=".ui.MainActivity">
 
     <fragment
-        android:id="@+id/NoteDatesList"
+        android:id="@+id/note_dates_list_fragment"
         android:name="ru.geekbrains.lession6.notepad.ui.fragments.NoteDatesListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

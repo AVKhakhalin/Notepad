@@ -2,15 +2,20 @@ package ru.geekbrains.lession6.notepad.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import ru.geekbrains.lession6.notepad.R;
 import ru.geekbrains.lession6.notepad.logic.NoteDates;
 import ru.geekbrains.lession6.notepad.logic.Notepad;
+import ru.geekbrains.lession6.notepad.ui.ContentNoteActivity;
 
 public class NoteDatesListFragment extends Fragment {
 
@@ -26,18 +32,9 @@ public class NoteDatesListFragment extends Fragment {
     // Создание класса с заметками
     private Notepad notepad = new Notepad();
 
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
-//    private String mParam1;
-//    private String mParam2;
-
-//    public static NoteDatesListFragment newInstance(String param1, String param2) {
     public static NoteDatesListFragment newInstance() {
         NoteDatesListFragment fragment = new NoteDatesListFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -46,8 +43,6 @@ public class NoteDatesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -71,8 +66,13 @@ public class NoteDatesListFragment extends Fragment {
         if (context != null)
         {
             NoteDates curDates = notepad.getNext();
-            Toast.makeText(context, String.format("%d", notepad.getNumberNotes()), Toast.LENGTH_SHORT).show();
+
+            // Определим ориентацию экрана
+            isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+            Toast.makeText(context, String.format("%S", String.valueOf(isLandscape)), Toast.LENGTH_SHORT).show();
             int counter = -1;
+            notepad.addNewNote("НОВАЯ ЗАПИСЬ");
             while (curDates != null)
             {
                 counter++;
@@ -83,8 +83,50 @@ public class NoteDatesListFragment extends Fragment {
                 curDates = notepad.getNext();
 
                 // Вешаем слушатель на элементы списка
-//                textView.setOnClickListener(v -> ФУНКЦИЯ ВЫЗОВА НОВОЙ АКТИВИТИ С СОДЕРЖАНИЕМ ЭЛЕМЕНТА);
+                final int noteIndex = counter;
+                textView.setOnClickListener(v -> showContentOrientation(noteIndex, notepad));
             }
+        }
+    }
+
+    private void showContentOrientation(int noteIndex, Notepad notepad)
+    {
+        if (isLandscape == true)
+        {
+            showLandCoatOfArms(noteIndex, notepad);
+        }
+        else
+        {
+            showPortCoatOfArms(noteIndex, notepad);
+        }
+    }
+
+    private void showLandCoatOfArms(int noteIndex, Notepad notepad)
+    {
+        // Создаём новый фрагмент с текущей позицией для вывода содержания заметки
+        ContentNoteFragment detail = ContentNoteFragment.newInstance(noteIndex, notepad);
+
+        // Выполняем транзакцию по замене фрагмента
+        FragmentActivity context = getActivity();
+        if (context != null)
+        {
+            FragmentManager fragmentManager = context.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.note_dates_content_fragment, detail); // замена фрагмента
+            fragmentTransaction.commit();
+        }
+    }
+
+    private void showPortCoatOfArms(int noteIndex, Notepad notepad)
+    {
+        // Откроем вторую activity
+        Context context = getContext();
+        if (context != null)
+        {
+            Intent intent = new Intent(context, ContentNoteActivity.class);
+            intent.putExtra(ContentNoteFragment.ARG_INDEX, noteIndex);
+            intent.putExtra(ContentNoteFragment.ARG_NOTEPAD, notepad);
+            startActivity(intent);
         }
     }
 }
