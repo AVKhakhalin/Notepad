@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="cities">
+        <item>Москва</item>           <!-- индекс 0 -->
+        <item>Санкт-Петербург</item>  <!-- индекс 1 -->
+        <item>Екатеринбург</item>     <!-- индекс 2 -->
+        <item>Новосибирск</item>      <!-- индекс 3 -->
+        <item>Самара</item>           <!-- индекс 4 -->
+    </string-array>
+</resources>

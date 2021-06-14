@@ -1,8 +1,8 @@
-package ru.geekbrains.lession6.notepad;
-
-import androidx.appcompat.app.AppCompatActivity;
+package ru.geekbrains.lession6.notepad.ui;
 
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import ru.geekbrains.lession6.notepad.R;
 
 public class MainActivity extends AppCompatActivity {
 
